@@ -26,3 +26,31 @@ in this case, we have parameters that wiht the values for the image
 '''
 print('width: ', image.width)
 print('height:', image.height)
+
+## Image resizing using nearest neighbor interpolation
+def f_resize(image,size):
+    '''
+    this functions allows to resize any image considering any size based on the relationship between
+    the images.
+    NOTE: this function may not work it's to explain how a function like this would work testing required
+    :param image: Original image
+    :param size: Size of the desired output
+    :return: single image with the new size given by parameter.
+    '''
+    # Get image dimensions
+    s_dim = image.shape()
+    # calculate the scaling factor
+    v_factor = [size[0]/s_dim[0],size[1]/s_dim[1]]
+    # create new image
+    m_image = np.zeros(size)
+    # cicle to fill the fill the new image
+    for col in range(size[0]):
+        # find the current position of the pixel
+        colf = int(col/v_factor[0])
+        for row in range (size[1]):
+            rowf = int(row/v_factor[1])
+            # get the value of the closest pixel to the image
+            currPix = image[colf][rowf]
+            # assing the same value to the new image.
+            m_image[col][row] = currPix
+    return m_image
